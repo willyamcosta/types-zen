@@ -12,13 +12,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: checkout zen repo.
+      - name: checkout our repo.
         uses: actions/checkout@v4
         with:
           path: output
           token: ${{ secrets.PAT }}
           
-      - name: checkout our repo.
+      - name: checkout zen repo.
         uses: actions/checkout@v4
         with:
           repository: zen-browser/desktop
@@ -29,7 +29,8 @@ jobs:
       
       - name: check for update and perform sync
         run: |
-          rsync -av --delete source/src/zen/@types output/
+          rsync -av --delete source/src/zen/@types/* output/
+          cd output/
           if git status --porcelain | grep -q .; then
             echo "Changes detected, committing and pushing..."
             git config --global user.name "github-actions[bot]"
